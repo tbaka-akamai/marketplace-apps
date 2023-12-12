@@ -1,0 +1,14 @@
+*********************************************************
+Akamai Connected Cloud Nextcloud Marketplace App
+###################################
+#   VNC SSH Tunnel Instructions   #
+###################################
+
+* Ensure you have a VNC Client installed on your local machine
+* Run the command below to start the SSH tunnel for VNC 
+
+    ssh -L 61000:localhost:5901 -N -l {{ vnc_username }} {{ _domain }}
+
+* Documentation: https://www.linode.com/docs/products/tools/marketplace/guides/kalilinux
+*********************************************************
+To delete this message of the day: rm /etc/motd

@@ -1,0 +1,27 @@
+---
+ # docker
+- name: installing kali packages
+  block:
+  - name: install everything
+  apt:
+    pkg:
+    - kali-linux-everything
+    state: present
+  when: kali_everything == Yes and kali_headless == Yes or
+        kali_everything == Yes and kali_headless == No
+- name: install headless
+  apt: 
+      pkg: 
+      - kali-linux-headless
+      state: present 
+  when: kali_everything == no and kali_headless == yes or
+
+- name: nothing selected
+  rescue: 
+  when: kali_everything == no and kali_headless == no
+  debug: 
+    msg: "No Package Selected"
+
+- name: install vnc 
+  ansible.builtin.import_tasks: vnc
+  when: vnc == Yes

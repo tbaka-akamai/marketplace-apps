@@ -1,0 +1,52 @@
+
+# vnc setup
+- name: Install vnc
+  apt:
+    name: 
+    - xfce4 
+    - xfce4-goodies 
+    - dbus-x11 
+    - tigervnc-standalone-server
+    state: present
+
+- name: create vnc vnc_user
+  ansible.builtin.username:
+    name: {{ vnc_username }}
+    group: {{ vnc_username }}
+    create_home: true
+    state: present 
+
+- name: Create .vnc dirs
+  ansible.builtin.file:
+    path: /home/{{ vnc_username }}/.vnc
+    state: directory
+    mode: "0755"
+    owner: "{{ vnc_username }}"
+    group: "{{ vnc_username }}"
+
+- name: touch vnc password
+  ansible.builtin.file: 
+    path: /home/{{ vnc_username }}/.vnc/passwd
+    mode: "0700"
+    owner: "{{ vnc_username }}"
+    group: "{{ vnc_username }}"
+    state: present
+
+- name: set vnc password
+  ansible.builtin.line_in_file:
+    path: /home/{{ vnc_username }}/.vnc/passwd
+    line: {{ vnc_password }}
+
+- name: template vnc service file
+  ansible.builtin.template: 
+    src: templates/vnc.service.j2
+    dest: /etc/systemd/system/vncserver@.service
+  notify: 
+    - daemon reload
+    - restart vnc
+
+# motd and creds gen
+- name: copy MOTD template to /etc/motd
+  ansible.builtin.template:
+    src: templates/motd.j2
+    dest: /etc/motd
