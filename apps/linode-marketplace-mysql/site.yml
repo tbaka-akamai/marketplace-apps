@@ -1,6 +1,6 @@
 # linode ansible playbook
 
-- name: configuring lamp
+- name: configuring mysql
   hosts: localhost
   connection: local
   gather_facts: true
@@ -10,5 +10,4 @@
     - group_vars/linode/vars
   roles:
     - common
-    - lamp
-    - post
+    - mysql
