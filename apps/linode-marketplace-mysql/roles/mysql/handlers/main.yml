@@ -1,4 +1,4 @@
-- name: reload apache2
+- name: restart mariadb
   service:
-    name: apache2
-    state: reloaded
+    name: mariadb
+    state: restarted

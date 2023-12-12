@@ -16,4 +16,4 @@
 - name: copy motd template
   ansible.builtin.template: 
     src: templates/motd.j2
-    dest: : /etc/motd
+    dest: /etc/motd
