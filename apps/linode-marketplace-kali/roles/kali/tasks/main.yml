@@ -5,17 +5,17 @@
     pkg:
     - kali-linux-everything
     state: present
-  when: kali_everything == Yes and kali_headless == Yes or
-        kali_everything == Yes and kali_headless == No
+  when: kali_everything == 'Yes' and kali_headless == 'Yes' or
+        kali_everything == 'Yes' and kali_headless == 'No'
 
 - name: install headless
   apt:
     pkg:
     - kali-linux-headless
     state: present
-  when: kali_everything == no and kali_headless == yes
+  when: kali_everything == 'No' and kali_headless == 'Yes'
 
 - name: install vnc
   ansible.builtin.import_role:
     name: vnc
-  when: vnc == Yes
+  when: vnc == 'Yes'

@@ -4,6 +4,6 @@
 
 - name: restart vnc
   ansible.builtin.systemd:
-    service: vnc
+    service: vncserver.service
     state: restarted
     enabled: true
