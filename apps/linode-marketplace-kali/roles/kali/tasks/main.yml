@@ -16,6 +16,12 @@
   when: kali_everything == 'No' and kali_headless == 'Yes'
 
 - name: install vnc
-  ansible.builtin.import_role:
+  ansible.builtin.include_role:
     name: vnc
-  when: vnc == 'Yes'
+  when: vnc == 'Yes' 
+
+# motd and creds gen
+- name: copy MOTD template to /etc/motd
+  ansible.builtin.template:
+    src: templates/motd.j2
+    dest: /etc/motd

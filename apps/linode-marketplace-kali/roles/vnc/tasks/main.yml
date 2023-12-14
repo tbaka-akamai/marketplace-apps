@@ -1,5 +1,8 @@
 
 # vnc setup
+# run as import from kali
+# or use provision.yml and deploy.sh to 
+# write vars ala wordpress
 - name: Install vnc
   apt:
     name:
@@ -43,9 +46,3 @@
   notify:
     - daemon reload
     - restart vnc
-
-# motd and creds gen
-- name: copy MOTD template to /etc/motd
-  ansible.builtin.template:
-    src: templates/motd.j2
-    dest: /etc/motd
