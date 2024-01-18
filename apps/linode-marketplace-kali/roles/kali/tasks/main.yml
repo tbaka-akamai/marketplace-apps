@@ -5,20 +5,20 @@
     pkg:
     - kali-linux-everything
     state: present
-  when: kali_everything == 'Yes' and kali_headless == 'Yes' or
-        kali_everything == 'Yes' and kali_headless == 'No' | bool
+  when: kali_everything == true and kali_headless == true | bool or
+        kali_everything == true and kali_headless == false | bool
 
 - name: install headless
   apt:
     pkg:
     - kali-linux-headless
     state: present
-  when: kali_everything == 'No' and kali_headless == 'Yes' | bool
+  when: kali_everything == false and kali_headless == true | bool
 
 - name: install vnc
   ansible.builtin.include_role:
     name: vnc
-  when: vnc == 'Yes' | bool
+  when: vnc == true | bool
 
 # motd and creds gen
 - name: copy MOTD template to /etc/motd
