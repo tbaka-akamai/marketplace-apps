@@ -3,13 +3,12 @@ set -e
 trap "cleanup $? $LINENO" EXIT
 
 ##Linode/SSH security settings
-#<UDF name="user_name" label="The limited sudo user to be created for the Linode" default="">
-#<UDF name="password" label="The password for the limited sudo user" example="an0th3r_s3cure_p4ssw0rd" default="">
+#<UDF name="user_name" label="The limited sudo user to be created for the Linode: *No Capital Letters or Special Characters*">
 #<UDF name="disable_root" label="Disable root access over SSH?" oneOf="Yes,No" default="No">
 #<UDF name="pubkey" label="The SSH Public Key that will be used to access the Linode (Recommended)" default="">
 
 ## Domain Settings
-#<UDF name="token_password" label="Your Linode API token. This is needed to create your WordPress server's DNS records" default="">
+#<UDF name="token_password" label="Your Linode API token. This is needed to create your server's DNS records" default="">
 #<UDF name="subdomain" label="Subdomain" example="The subdomain for the DNS record: www (Requires Domain)" default="">
 #<UDF name="domain" label="Domain" example="The domain for the DNS record: example.com (Requires API token)" default="">
 
@@ -33,21 +32,15 @@ function cleanup {
 
 function udf {
   local group_vars="${WORK_DIR}/${MARKETPLACE_APP}/group_vars/linode/vars"
-  echo "webserver_stack: lemp" >> ${group_vars};
-  
-  if [[ -n ${USER_NAME} ]]; then
-    echo "username: ${USER_NAME}" >> ${group_vars};
-  else echo "No username entered";
-  fi
+  sed 's/  //g' <<EOF > ${group_vars}
+
+  # sudo username
+  username: ${USER_NAME}
+EOF
 
   if [ "$DISABLE_ROOT" = "Yes" ]; then
     echo "disable_root: yes" >> ${group_vars};
   else echo "Leaving root login enabled";
-  fi
-
-  if [[ -n ${PASSWORD} ]]; then
-    echo "password: ${PASSWORD}" >> ${group_vars};
-  else echo "No password entered";
   fi
 
   if [[ -n ${PUBKEY} ]]; then
@@ -92,17 +85,17 @@ function run {
   # venv
   cd ${WORK_DIR}/${MARKETPLACE_APP}
   pip3 install virtualenv
-  python3 -m python3 -m virtualenv env --system-site-packages
+  python3 -m virtualenv env
   source env/bin/activate
   pip install pip --upgrade
-  pip install -I -r requirements.txt
+  pip install -r requirements.txt
   ansible-galaxy install -r collections.yml
   
 
   # populate group_vars
   udf
   # run playbooks
-  for playbook in site.yml; do ansible-playbook -v $playbook; done
+  for playbook in provision.yml site.yml; do ansible-playbook -v $playbook; done
   
 }
 

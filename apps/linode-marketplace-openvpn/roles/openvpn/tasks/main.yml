@@ -27,23 +27,13 @@
     apt: 
       name: openvpn-as
       state: present 
-    register: result
 
-  - name: capture OpenVPN creds
-    ansible.builtin.set_fact: 
-      openvpn_login: "{{ result.stdout | regex_search('To login') }}"
-      cacheable: yes
+#  - name: capture OpenVPN creds
+#    ansible.builtin.slurp: 
+#       src: /usr/local/openvpn_as/init.log
+#    register: openvpn_log
 
-# motd and creds gen
-  - name: copy MOTD template to /etc/motd
-    template:
-      src: templates/motd.j2
-      dest: /etc/motd
-
-  - name: writing openvpn creds into file
-    copy:
-      dest: /root/.credentials
-      mode: '0600'
-      content: |
-        {{ openvpn_login }}
-        *** Please ensure you change the default credentials immediately after login! ***  
+#  - name: regex for generated password
+#    ansible.builtin.debug:
+#      msg: "{{ openvpn_log.content | b64decode | regex_search('Auto-generated pass = \"([^\"]+)\"', multiline=True) | regex_search('\"([^\"]+)\"') | regex_replace('[\"\\\\]', '') }}"
+#    register: opevpn_pass
