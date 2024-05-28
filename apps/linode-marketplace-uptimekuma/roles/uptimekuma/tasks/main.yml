@@ -1,10 +1,10 @@
 ---
 - name: create docker volume
-  docker_volume:
+  community.docker.docker_volume:
     name: "uptime-kuma"
 
 - name: run postgres docker container
-  docker_container:
+  community.docker.docker_container:
     name: uptime-kuma
     image: louislam/uptime-kuma:1
     restart_policy: always

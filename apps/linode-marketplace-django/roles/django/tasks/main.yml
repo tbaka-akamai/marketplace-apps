@@ -20,14 +20,14 @@
 
 # postgres
 - name: configure PostgreSQL
-  postgresql_db:
+  community.postgresql.postgresql_db:
     name: django
     state: present
   become: true
   become_user: postgres
 
 - name: create PostgreSQL user
-  postgresql_user:
+  community.postgresql.postgresql_user:
     name: django
     password: "{{ postgres_db_password }}"
     encrypted: yes
@@ -36,7 +36,7 @@
   become_user: postgres
 
 - name: set client_encoding for django
-  postgresql_query:
+  community.postgresql.postgresql_query:
     db: django
     login_user: postgres
     login_unix_socket: /var/run/postgresql
@@ -46,7 +46,7 @@
   become_user: postgres
 
 - name: set default_transaction_isolation for django
-  postgresql_query:
+  community.postgresql.postgresql_query:
     db: django
     login_user: postgres
     query:
@@ -55,7 +55,7 @@
   become_user: postgres
 
 - name: set timezone for django
-  postgresql_query:
+  community.postgresql.postgresql_query:
     db: django
     login_user: postgres
     login_password: "{{ postgres_db_password }}"
