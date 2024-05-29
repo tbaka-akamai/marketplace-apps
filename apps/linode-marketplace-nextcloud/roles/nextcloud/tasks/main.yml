@@ -8,7 +8,7 @@
     recurse: yes
 
 - name: run nexcloud aio container
-  docker_container:
+  community.docker.docker_container:
     name: nextcloud-aio-mastercontainer
     image: nextcloud/all-in-one:latest
     restart_policy: always
