@@ -16,6 +16,6 @@ psycopg2-binary==2.9.9
 django==5.0.3
 gunicorn==22.0.0
 ## community.mysql dependanices ##
-# PyMySQL==1.0.2
+# PyMySQL==1.1.1
 ## community.docker dependancies ##
 # docker==6.1.3
