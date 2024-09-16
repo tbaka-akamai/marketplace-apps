@@ -7,6 +7,20 @@ updates:
       interval: "weekly"
       day: "sunday"
       time: "16:00"
+    groups:
+      major-version:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+      minor-version:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 1
     target-branch: "develop"
 
