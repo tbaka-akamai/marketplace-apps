@@ -4,9 +4,8 @@ updates:
     directories:
       - "/apps/linode-marketplace-*"
     schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "16:00"
+      interval: "daily"
+      time: "13:00"
     groups:
       major-version:
         applies-to: version-updates
