@@ -7,12 +7,6 @@ updates:
       interval: "daily"
       time: "13:00"
     groups:
-      major-version:
-        applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "major"
       minor-version:
         applies-to: version-updates
         patterns:
