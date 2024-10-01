@@ -3,7 +3,8 @@ set -e
 trap "cleanup $? $LINENO" EXIT
 
 # git repo
-export GIT_REPO="https://github.com/akamai-compute-marketplace/marketplace-apps.git"
+export GIT_REPO="https://github.com/tbaka-akamai/marketplace-apps.git"
+export BRANCH="dev/ansible_ver"
 export WORK_DIR="/root/marketplace-apps" # moved to root dir because cpanel install will remove anything in tmp
 
 # enable logging

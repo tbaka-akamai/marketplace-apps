@@ -13,7 +13,8 @@ trap "cleanup $? $LINENO" EXIT
 #<UDF name="soa_email_address" label="Email address for new DNS zone" example="user@domain.tld (Requires API token)" default="">
 
 # git repo
-export GIT_REPO="https://github.com/akamai-compute-marketplace/marketplace-apps.git"
+export GIT_REPO="https://github.com/tbaka-akamai/marketplace-apps.git"
+export BRANCH="dev/ansible_ver"
 export WORK_DIR="/tmp/marketplace-apps" 
 export MARKETPLACE_APP="apps/linode-marketplace-secure-your-server"
 
@@ -70,7 +71,7 @@ function run {
   apt-get install -y git python3 python3-pip
 
   # clone repo and set up ansible environment
-  git -C /tmp clone ${GIT_REPO}
+  # git -C /tmp clone ${GIT_REPO}
   # for a single testing branch
   # git -C /tmp clone --single-branch --branch ${BRANCH} ${GIT_REPO}
 

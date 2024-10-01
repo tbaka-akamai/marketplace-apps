@@ -15,7 +15,8 @@ trap "cleanup $? $LINENO" EXIT
 #<UDF name="soa_email_address" label="Admin Email for the Harbor server and Let's Encrypt SSL certificate">
 
 # git repo
-export GIT_REPO="https://github.com/akamai-compute-marketplace/marketplace-apps.git"
+export GIT_REPO="https://github.com/tbaka-akamai/marketplace-apps.git"
+export BRANCH="dev/ansible_ver"
 export WORK_DIR="/tmp/marketplace-apps" 
 export MARKETPLACE_APP="apps/linode-marketplace-harbor"
 
@@ -73,9 +74,9 @@ function run {
   apt-get install -y git python3 python3-pip
 
   # clone repo and set up ansible environment
-  git -C /tmp clone ${GIT_REPO}
+  # git -C /tmp clone ${GIT_REPO}
   # for a single testing branch
-  # git -C /tmp clone -b ${BRANCH} ${GIT_REPO}
+  git -C /tmp clone -b ${BRANCH} ${GIT_REPO}
 
   # venv
   cd ${WORK_DIR}/${MARKETPLACE_APP}
