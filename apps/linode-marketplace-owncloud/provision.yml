@@ -18,3 +18,4 @@
         block: |
           oc_admin_password: {{ lookup('password', '/dev/null length=45 chars=ascii_letters,digits') }}
           oc_db_password: {{ lookup('password', '/dev/null length=45 chars=ascii_letters,digits') }}
+          mysql_root_password: {{ lookup('password', '/dev/null length=45 chars=ascii_letters,digits') }}
