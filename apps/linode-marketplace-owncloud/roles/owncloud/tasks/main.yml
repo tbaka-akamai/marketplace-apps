@@ -1,0 +1,6 @@
+---
+- name: install lamp stack
+  import_tasks: lamp.yml
+
+- name: install owncloud
+  import_tasks: owncloud.yml

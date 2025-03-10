@@ -1,0 +1,21 @@
+---
+- name: copy MOTD template to /etc/motd
+  template:
+    src: templates/motd.j2
+    dest: /etc/motd
+
+- name: writing owncloud creds into file
+  copy:
+    dest: /home/{{ username }}/.credentials
+    owner: '{{ username }}'
+    group: '{{ username }}'
+    mode: '0600'
+    content: |
+      Sudo Username: {{ username }}
+      Sudo Password: {{ password }}
+      Owncloud Database User: {{ db_username }}
+      Owncloud Database: {{ db_name }}
+      Owncloud Database Password: {{ oc_db_password }}
+      Mysql Root Password: {{ mysql_root_password }}
+      Owncloud Admin User: {{ oc_admin }}
+      Owncloud Admin Password: {{ oc_admin_password }}

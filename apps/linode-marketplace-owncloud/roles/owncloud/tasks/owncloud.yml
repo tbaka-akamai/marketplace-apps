@@ -1,0 +1,85 @@
+---
+- name: download owncloud latest
+  get_url:
+    url: https://download.owncloud.com/server/stable/owncloud-complete-latest.zip
+    path: '/tmp/owncloud.zip'
+    owner: root
+    group: root
+    mode: '0640'
+
+- name: create owncloud dir
+  file: 
+    path: '/var/www/owncloud'
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0750'
+
+- name: inflate archive
+  unarchive:
+    src: '/tmp/owncloud.zip'
+    dest: '/var/www/owncloud'
+    owner: www-data
+    group: www-data
+    mode: '0640'
+
+- name: add apache2 conf
+  copy:
+    src: owncloud.conf
+    dest: '/etc/apache2/sites-available/owncloud.conf'
+    owner: root
+    group: root
+    mode: '0640'
+
+- name: enable the a2ensite
+  shell: a2ensite owncloud
+  args:
+    chdir: '/etc/apache2/sites-available/owncloud.conf'
+  notify: restart apache2
+
+- name: template vhost file
+  template:
+    src: owncloud.conf.j2
+    dest: '/etc/apache2/sites-available/owncloud.conf'
+    owner: root
+    group: root
+    mode: '0640'
+
+- name: run owncloud occ commands
+  shell:
+    chdir: '/var/www/owncloud/occ'
+    cmd: |
+      occ maintenance:install
+      --database "mysql"
+      --database-name "{{ db_name }}"
+      --database-user "{{ db_username }}"
+      --database-pass "{{ oc_db_password }}"
+      --admin-user "{{ oc_admin }}"
+      --admin-pass "{{ oc_admin_password }}"
+  become: true
+  become_user: www-data
+  become_method: su
+
+- name: run owncloud trusted domain command
+  shell:
+    chdir: '/var/www/owncloud/occ'
+    cmd: |
+      occ conf:sys:set
+      trusted_domains 1 --value={{ _domain }}
+  become: true
+  become_user: www-data
+  become_method: su
+
+- name: run owncloud trusted IP command
+  shell:
+    chdir: '/var/www/owncloud/occ'
+    cmd: |
+      occ conf:sys:set
+      trusted_domains 2 --value={{ ansible_default_ipv4.address }}
+  become: true
+  become_user: www-data
+  become_method: ansible.builtin.su
+  notify: restart apache2
+
+- name: run certbot ssl
+  import_role: certbot_ssl

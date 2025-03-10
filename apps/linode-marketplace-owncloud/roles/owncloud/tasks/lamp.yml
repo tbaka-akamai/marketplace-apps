@@ -1,0 +1,36 @@
+---
+- name: run sql database helper
+  import_role: 
+    name: database
+
+- name: install apache2 and php depends
+  apt:
+    pkg:
+      - apache2
+      - php-common
+      - libapache2-mod-php
+      - php-mysql
+      - unzip
+      - php-gd
+      - php-json
+      - php-curl
+      - php-mbstring
+      - php-intl
+      - php-imagick
+      - php-xml
+      - php-zip
+    state: present
+
+- name: enable apache2 modules
+  community.general.apache2_module:
+    name: 
+      - headers
+      - env
+      - dir
+      - mime
+      - unique_id
+      - ssl
+    state: present
+
+
+  
