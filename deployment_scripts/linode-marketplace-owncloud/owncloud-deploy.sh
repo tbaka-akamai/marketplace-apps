@@ -12,9 +12,9 @@ fi
 
 ## Domain Settings
 #<UDF name="soa_email_address" label="Start of Authority email for Let's Encrypt SSL">
-#<UDF name="token_password" label="Your Linode API token. This is needed to create your server's DNS records">
-#<UDF name="subdomain" label="Subdomain" example="The subdomain for the DNS record: www (Requires Domain)">
-#<UDF name="domain" label="Domain" example="The domain for the DNS record: example.com (Requires API token)">
+#<UDF name="token_password" label="Your Linode API token. This is needed to create your server's DNS records" default="">
+#<UDF name="subdomain" label="Subdomain" example="The subdomain for the DNS record: www (Requires Domain)" default="">
+#<UDF name="domain" label="Domain" example="The domain for the DNS record: example.com (Requires API token)" default="">
 
 ## ownCloud Settings
 #<UDF name="oc_admin" label="The name of the admin user for ownCloud">
