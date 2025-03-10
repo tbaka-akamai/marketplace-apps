@@ -11,6 +11,7 @@ fi
 #<UDF name="disable_root" label="Disable root access over SSH?" oneOf="Yes,No" default="No">
 
 ## Domain Settings
+#<UDF name="soa_email_address" label="Start of Authority email for Let's Encrypt SSL">
 #<UDF name="token_password" label="Your Linode API token. This is needed to create your server's DNS records">
 #<UDF name="subdomain" label="Subdomain" example="The subdomain for the DNS record: www (Requires Domain)">
 #<UDF name="domain" label="Domain" example="The domain for the DNS record: example.com (Requires API token)">
@@ -46,6 +47,7 @@ function udf {
   # sudo username
   username: ${USER_NAME}
   # owncloud vars
+  soa_email_address: ${SOA_EMAIL_ADDRESS}
   oc_admin: ${OC_ADMIN}
   webserver_stack: lamp
   database: ${DATABASE}
