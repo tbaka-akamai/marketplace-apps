@@ -2,23 +2,24 @@
 - name: download owncloud latest
   get_url:
     url: https://download.owncloud.com/server/stable/owncloud-complete-latest.zip
-    path: '/tmp/owncloud.zip'
+    dest: '/tmp/owncloud.zip'
     owner: root
     group: root
     mode: '0640'
-
-- name: create owncloud dir
-  file: 
-    path: '/var/www/owncloud'
-    state: directory
-    owner: www-data
-    group: www-data
-    mode: '0750'
 
 - name: inflate archive
   unarchive:
     src: '/tmp/owncloud.zip'
     dest: '/var/www/owncloud'
+    owner: www-data
+    group: www-data
+    mode: '0750'
+
+- name: chown owncloud dir
+  file: 
+    path: '/var/www/owncloud'
+    state: directory
+    recurse: true
     owner: www-data
     group: www-data
     mode: '0640'
@@ -34,7 +35,7 @@
 - name: enable the a2ensite
   shell: a2ensite owncloud
   args:
-    chdir: '/etc/apache2/sites-available/owncloud.conf'
+    chdir: '/etc/apache2/sites-available'
   notify: restart apache2
 
 - name: template vhost file
@@ -47,7 +48,7 @@
 
 - name: run owncloud occ commands
   shell:
-    chdir: '/var/www/owncloud/occ'
+    chdir: '/var/www/owncloud'
     cmd: |
       occ maintenance:install
       --database "mysql"
@@ -62,7 +63,7 @@
 
 - name: run owncloud trusted domain command
   shell:
-    chdir: '/var/www/owncloud/occ'
+    chdir: '/var/www/owncloud'
     cmd: |
       occ conf:sys:set
       trusted_domains 1 --value={{ _domain }}
@@ -72,7 +73,7 @@
 
 - name: run owncloud trusted IP command
   shell:
-    chdir: '/var/www/owncloud/occ'
+    chdir: '/var/www/owncloud'
     cmd: |
       occ conf:sys:set
       trusted_domains 2 --value={{ ansible_default_ipv4.address }}

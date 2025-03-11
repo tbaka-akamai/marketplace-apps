@@ -21,16 +21,26 @@
       - php-zip
     state: present
 
+- name: install apache modules
+  command: a2enmod {{ item }}
+  loop:
+    - headers
+    - env
+    - dir
+    - mime
+    - unique_id
+    - ssl
+
 - name: enable apache2 modules
   community.general.apache2_module:
-    name: 
-      - headers
-      - env
-      - dir
-      - mime
-      - unique_id
-      - ssl
+    name: '{{ item }}'
     state: present
-
+  loop: 
+    - headers
+    - env
+    - dir
+    - mime
+    - unique_id
+    - ssl
 
   
