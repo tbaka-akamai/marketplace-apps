@@ -12,17 +12,12 @@ fi
 
 ## Domain Settings
 #<UDF name="soa_email_address" label="Start of Authority email for Let's Encrypt SSL">
-#<UDF name="token_password" label="Your Linode API token. This is needed to create your server's DNS records" default="">
+#<UDF name="token_password" label="Your Linode API token. This is needed to create your server's DNS records">
+#<UDF name="domain" label="Domain" example="The domain for the DNS record: example.com (Requires API token)">
 #<UDF name="subdomain" label="Subdomain" example="The subdomain for the DNS record: www (Requires Domain)" default="">
-#<UDF name="domain" label="Domain" example="The domain for the DNS record: example.com (Requires API token)" default="">
 
 ## ownCloud Settings
-#<UDF name="oc_admin" label="The name of the admin user for ownCloud">
-
-## LAMP Stack Settings
-#<UDF name="database" label="The SQL server to deploy" oneOf="mariadb,mysql" default="mariadb">
-#<UDF name="db_name" label="The name of the database" default="owncloud">
-#<UDF name="db_username" label="The name of the database user to create" default="owncloud">
+#<UDF name="ocis_admin" label="The name of the admin user for ownCloud">
 
 # git repo
 export GIT_REPO="https://github.com/akamai-compute-marketplace/marketplace-apps.git"
@@ -48,11 +43,7 @@ function udf {
   username: ${USER_NAME}
   # owncloud vars
   soa_email_address: ${SOA_EMAIL_ADDRESS}
-  oc_admin: ${OC_ADMIN}
-  webserver_stack: lamp
-  database: ${DATABASE}
-  db_name: ${DB_NAME}
-  db_username: ${DB_USERNAME}
+  ocis_admin: ${OC_ADMIN}
 EOF
 
   if [ "$DISABLE_ROOT" = "Yes" ]; then

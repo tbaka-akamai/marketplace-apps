@@ -13,9 +13,5 @@
     content: |
       Sudo Username: {{ username }}
       Sudo Password: {{ password }}
-      Owncloud Database User: {{ db_username }}
-      Owncloud Database: {{ db_name }}
-      Owncloud Database Password: {{ oc_db_password }}
-      Mysql Root Password: {{ mysql_root_password }}
-      Owncloud Admin User: {{ oc_admin }}
-      Owncloud Admin Password: {{ oc_admin_password }}
+      Owncloud Infinite Scale Admin User: {{ ocis_admin }}
+      Owncloud Infinite Scale Admin Password: {{ ocis_admin_password }}
