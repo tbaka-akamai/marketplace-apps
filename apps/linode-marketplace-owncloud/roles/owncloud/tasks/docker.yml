@@ -1,46 +1,16 @@
 ---
-- name: run sql database helper
-  import_role: 
-    name: database
+- name: run docker helper
+  import_role:
+    name: docker
 
-- name: install apache2 and php depends
+- name: install docker-compose
   apt:
     pkg:
-      - apache2
-      - php-common
-      - libapache2-mod-php
-      - php-mysql
-      - unzip
-      - php-gd
-      - php-json
-      - php-curl
-      - php-mbstring
-      - php-intl
-      - php-imagick
-      - php-xml
-      - php-zip
+      - docker-compose-plugin
     state: present
 
-- name: install apache modules
-  command: a2enmod {{ item }}
-  loop:
-    - headers
-    - env
-    - dir
-    - mime
-    - unique_id
-    - ssl
-
-- name: enable apache2 modules
-  community.general.apache2_module:
-    name: '{{ item }}'
-    state: present
-  loop: 
-    - headers
-    - env
-    - dir
-    - mime
-    - unique_id
-    - ssl
-
-  
+- name: run docker
+  systemd_service:
+    name: docker
+    state: started
+    enabled: true

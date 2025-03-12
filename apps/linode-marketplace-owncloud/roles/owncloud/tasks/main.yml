@@ -1,6 +1,6 @@
 ---
-- name: install lamp stack
-  import_tasks: lamp.yml
+- name: install docker
+  import_tasks: docker.yml
 
 - name: install owncloud
   import_tasks: owncloud.yml
