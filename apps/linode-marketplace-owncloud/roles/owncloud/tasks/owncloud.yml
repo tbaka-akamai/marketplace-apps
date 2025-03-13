@@ -1,8 +1,29 @@
 ---
-- name: pull ocis latest image
-  community.docker.docker_image:
-    name: owncloud/ocis
-    source: pull
-    tags: latest
-    pull:
-      platform: amd64
+- name: create owncloud dirs
+  file:
+    state: directory
+    path: '{{ item }}'
+    owner: root
+    group: root
+  loop:
+    - '/var/lib/ocis/data'
+    - '/etc/docker/ocis/config'
+
+- name: template owncloud-vars
+  template:
+    src: owncloud-vars.env.j2
+    dest: '/etc/docker/ocis/owncloud-vars.env'
+    owner: root
+    group: root
+
+- name: template docker compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: '/etc/docker/ocis/docker-compose.yml'
+    owner: root
+    group: root
+
+- name: build project
+  community.docker.docker_compose_v2:
+    project_src: '/etc/docker/ocis'
+    state: present
