@@ -11,7 +11,7 @@ fi
 
 ## MySQL settings
 #<UDF name="database" label="Install either MySQL-Server or MariaDB-Server" oneOf="mariadb,mysql" default="mariadb"
-
+#<UDF name="phpmyadmin_install" label="Install phpMyAdmin?" oneOf="Yes,No" default="No">
 # git repo
 export GIT_REPO="https://github.com/akamai-compute-marketplace/marketplace-apps.git"
 export WORK_DIR="/tmp/marketplace-apps" 
@@ -36,6 +36,7 @@ function udf {
   username: ${USER_NAME}
   # database install option
   database: ${DATABASE}
+  phpmyadmin_install: ${PHPMYADMIN_INSTALL}
 EOF
 
   if [ "$DISABLE_ROOT" = "Yes" ]; then

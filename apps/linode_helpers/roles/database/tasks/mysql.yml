@@ -31,3 +31,7 @@
     login_unix_socket: /run/mysqld/mysqld.sock
     name: test
     state: absent
+
+- name: add optional phpmyadmin
+  import_tasks: phpmyadmin.yml
+  when: phpmyadmin_install == yes
