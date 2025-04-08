@@ -34,4 +34,4 @@
 
 - name: add optional phpmyadmin
   import_tasks: phpmyadmin.yml
-  when: phpmyadmin_install == yes
+  when: phpmyadmin_install == 'yes'
