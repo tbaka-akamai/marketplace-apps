@@ -33,5 +33,5 @@
     state: absent
 
 - name: add optional phpmyadmin
-  import_tasks: phpmyadmin.yml
-  when: phpmyadmin_install == 'yes'
+  include_tasks: phpmyadmin.yml
+  when: phpmyadmin_install is true
