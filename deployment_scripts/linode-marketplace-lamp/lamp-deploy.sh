@@ -44,6 +44,7 @@ function udf {
   username: ${USER_NAME}
   webserver_stack: lamp
   soa_email_address: ${SOA_EMAIL_ADDRESS}
+  phpmyadmin_install: ${PHPMYADMIN_INSTALL}
 EOF
   
   if [ "$DISABLE_ROOT" = "Yes" ]; then
