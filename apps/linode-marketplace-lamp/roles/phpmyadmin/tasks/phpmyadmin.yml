@@ -1,11 +1,7 @@
 ---
-- name: install phpmyadmin and dependencies
+- name: install php modules and phpmyadmin
   apt:
-    pkg: 
-      - apache2
-      - php
-      - libapache2-mod-php
-      - php-mysql
+    pkg:
       - php-mbstring
       - php-zip
       - php-gd
@@ -21,9 +17,6 @@
   changed_when: mbstring_result.rc == 0
 
 - name: restart apache
-  service:
+  systemd:
     name: apache2
     state: restarted
-
-
-

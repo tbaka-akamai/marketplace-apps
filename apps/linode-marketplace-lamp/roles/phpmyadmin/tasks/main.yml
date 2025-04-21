@@ -1,0 +1,4 @@
+---
+- name: install phpmyadmin
+  include_tasks: phpmyadmin.yml
+  when: install_phpmyadmin is true
