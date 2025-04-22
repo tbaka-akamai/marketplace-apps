@@ -2,19 +2,8 @@
 - name: install php modules and phpmyadmin
   apt:
     pkg:
-      - php-mbstring
-      - php-zip
-      - php-gd
-      - php-json
-      - php-curl
-      - php-cli
       - phpmyadmin
     state: present
-
-- name: enable mbstring
-  command: phpenmod mbstring
-  register: mbstring_result
-  changed_when: mbstring_result.rc == 0
 
 - name: restart apache
   systemd:
